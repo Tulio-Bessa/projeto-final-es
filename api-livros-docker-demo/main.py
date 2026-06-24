@@ -95,6 +95,18 @@ def listar_livros():
     return servico.listar()
 
 
+@app.get("/livros/busca", response_model=list[Livro])
+def buscar_por_titulo(titulo: str):
+    livros = servico._repo.listar()
+
+    resultado = [
+        livro for livro in livros
+        if titulo.lower() in livro.titulo.lower()
+    ]
+
+    return resultado
+
+
 @app.get("/livros/{livro_id}", response_model=Livro)
 def buscar_livro(livro_id: int):
     livro = servico.buscar(livro_id)
