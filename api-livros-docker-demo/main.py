@@ -17,6 +17,7 @@ from fastapi import FastAPI, HTTPException, status
 
 from models import Livro, LivroCriar, LivroAtualizar
 from repository import RepositorioEmMemoria, RepositorioLivros
+import requests
 
 
 # ----------------------------------------------------------------------
@@ -45,6 +46,25 @@ class ServicoLivros:
         for livro in livros:
             if livro.isbn == dados.isbn:
                 raise ValueError("ISBN já cadastrado")
+
+        
+    # CHAMADA API EXTERNA (OPEN LIBRARY)
+        url = f"https://openlibrary.org/api/books?bibkeys=ISBN:{dados.isbn}&format=json&jscmd=data"
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            data = response.json()
+            key = f"ISBN:{dados.isbn}"
+
+            if key in data:
+                livro_data = data[key]
+
+                # preenchendo automaticamente
+                dados.titulo = livro_data.get("title", dados.titulo)
+
+                autores = livro_data.get("authors", [])
+                if autores:
+                    dados.autor = autores[0].get("name", dados.autor)
 
         return self._repo.adicionar(dados)
 
