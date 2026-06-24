@@ -39,6 +39,13 @@ class ServicoLivros:
         return self._repo.buscar_por_id(livro_id)
 
     def criar(self, dados: LivroCriar) -> Livro:
+    # Regra de negócio: impedir ISBN duplicado
+        livros = self._repo.listar()
+
+        for livro in livros:
+            if livro.isbn == dados.isbn:
+                raise ValueError("ISBN já cadastrado")
+
         return self._repo.adicionar(dados)
 
     def atualizar(self, livro_id: int, dados: LivroAtualizar) -> Livro | None:
@@ -81,7 +88,14 @@ def buscar_livro(livro_id: int):
 
 @app.post("/livros", response_model=Livro, status_code=status.HTTP_201_CREATED)
 def criar_livro(dados: LivroCriar):
-    return servico.criar(dados)
+    try:
+        return servico.criar(dados)
+    except ValueError as erro:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(erro),
+        )
+
 
 
 @app.put("/livros/{livro_id}", response_model=Livro)
