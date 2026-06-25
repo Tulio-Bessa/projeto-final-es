@@ -1,12 +1,12 @@
 # projeto-final-es
 
-# 📚 API de Catálogo de Livros
+#  API de Catálogo de Livros
 
 API REST desenvolvida com FastAPI para gerenciamento de livros, com validação de regras de negócio, integração com API externa, testes automatizados, pipeline CI e deploy em ambiente cloud.
 
 ---
 
-## 🚀 Funcionalidades
+##  Funcionalidades
 
 ✅ Cadastro, listagem, busca, atualização e remoção de livros  
 ✅ Validação de ISBN único (regra de negócio)  
@@ -18,7 +18,7 @@ API REST desenvolvida com FastAPI para gerenciamento de livros, com validação 
 
 ---
 
-## 🧠 Arquitetura
+##  Arquitetura
 
 O projeto foi dividido em camadas:
 
