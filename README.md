@@ -1,5 +1,10 @@
 # projeto-final-es
 
+#003540 - Thalison de Oliveira Santos
+#007217 - Julia Sudário Silva
+#007194 - Adryan Ryan Santos
+#007225 - Túlio Menezes Bessa
+
 #  API de Catálogo de Livros
 
 API REST desenvolvida com FastAPI para gerenciamento de livros, com validação de regras de negócio, integração com API externa, testes automatizados, pipeline CI e deploy em ambiente cloud.
